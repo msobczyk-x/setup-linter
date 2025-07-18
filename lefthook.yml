@@ -1,0 +1,42 @@
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: "*.{js,ts,jsx,tsx,json,md}"
+      run: bun run format
+      stage_fixed: true
+
+    lint:
+      glob: "*.{js,ts,jsx,tsx}"
+      run: bun run lint
+      fail_text: "Linting failed. Please fix the issues above."
+
+    type-check:
+      glob: "*.{ts,tsx}"
+      run: bun run build:all --dry-run
+      fail_text: "Type checking failed. Please fix TypeScript errors."
+
+pre-push:
+  parallel: false
+  commands:
+    audit:
+      run: bun audit
+      fail_text: "Security vulnerabilities found. Please run 'bun audit --fix' or review the issues."
+
+    test:
+      run: bun test
+      fail_text: "Tests failed. Please fix failing tests before pushing."
+
+    lint-final:
+      run: bun run lint
+      fail_text: "Final lint check failed. Please fix linting issues."
+
+    build:
+      run: bun run build
+      fail_text: "Build failed. Please fix build errors before pushing."
+
+skip_output:
+  - meta
+  - summary
+
+colors: true

@@ -1,0 +1,91 @@
+{
+  "name": "@setup-linter/core",
+  "version": "0.0.1",
+  "description": "CLI tool to setup ESLint configuration for JavaScript/TypeScript projects",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "bin": {
+    "setup-linter": "dist/index.js"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "files": [
+    "dist/**/*",
+    "templates/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target node --format esm",
+    "build:lib": "bun build src/index.ts --outdir dist --target node --format esm",
+    "build:all": "bun run build && bun run build:lib",
+    "dev": "bun run src/index.ts",
+    "dev:watch": "tsc --watch src/index.ts",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "rebuild": "bun run clean && bun run build:all",
+    "test": "bun test",
+    "prepublishOnly": "bun run rebuild",
+    "lint": "biome lint src/",
+    "lint:fix": "biome lint --write src/",
+    "format": "biome format --write src/",
+    "format:check": "biome format src/",
+    "type-check": "tsc --noEmit",
+    "prepare": "lefthook install"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "bun": ">=1.2.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msobczyk-x/setup-linter.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/msobczyk-x/setup-linter/issues"
+  },
+  "packageManager": "bun@1.2.18",
+  "homepage": "https://github.com/msobczyk-x/setup-linter#readme",
+  "devDependencies": {
+    "@biomejs/biome": "^2.1.2",
+    "@types/bun": "latest",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.16.4",
+    "knip": "^5.62.0",
+    "lefthook": "^1.12.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "fs-extra": "^11.3.0",
+    "globby": "^14.1.0",
+    "picocolors": "^1.1.1"
+  },
+  "keywords": [
+    "cli",
+    "eslint",
+    "linter",
+    "setup",
+    "typescript",
+    "javascript",
+    "react",
+    "react-native",
+    "configuration",
+    "developer-tools"
+  ],
+  "author": {
+    "name": "Maciej Sobczyk (@msobczyk-x)"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
